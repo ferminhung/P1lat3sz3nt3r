@@ -1,26 +1,29 @@
 function desactivar(id, sIdentificador, i){
-     $.ajax({
-        data:{
-            sCodigoWebPhp:sIdentificador, sIdPhp:id, Mandato:'DesActivarClase'
-        },
-        url:globalURL,
-        method:'POST',
-        beforeSend:function(){
-            $.mobile.loading( "show", {
-              text: "cargando",
-              textVisible: true,
-              theme: "a",
-              html: ""
-            });
-            
-        },success:function(respuesta){  
-            $.mobile.loading( "hide" );
-            $('#fila'+i).remove();
-            alert(respuesta);
-        },error:function(jqXHR, textStatus, errorThrown){
-            ajax_error(jqXHR, textStatus, errorThrown,true);
-        }
-    });
+    var desactivarYa=confirm("Estas segura que quieres desactivar la clase ");
+    if(desactivarYa){
+         $.ajax({
+            data:{
+                sCodigoWebPhp:sIdentificador, sIdPhp:id, Mandato:'DesActivarClase'
+            },
+            url:globalURL,
+            method:'POST',
+            beforeSend:function(){
+                $.mobile.loading( "show", {
+                  text: "cargando",
+                  textVisible: true,
+                  theme: "a",
+                  html: ""
+                });
+                
+            },success:function(respuesta){  
+                $.mobile.loading( "hide" );
+                $('#fila'+i).remove();
+                alert(respuesta);
+            },error:function(jqXHR, textStatus, errorThrown){
+                ajax_error(jqXHR, textStatus, errorThrown,true);
+            }
+        });
+    }
 }
 
 $(document).on("pageshow","#reserva",function(event, ui){
@@ -52,7 +55,9 @@ $(document).on("pageshow","#reserva",function(event, ui){
             if(respuesta!="SIN REGISTROS"){
                 var html = '';
                 if (respuesta!="SIN"){
-                    var aTletas = JSON.parse(respuesta);
+                    var aStalk = JSON.parse(respuesta);
+                    var aTletas=JSON.parse(aStalk[0].listaReservas);
+                    var aListaClases=JSON.parse(aStalk[0].totales);   
                     var ij=0;
                     $.each( aTletas, function( i, value ) {
                         html += '<tr id="fila'+ij+'"style="display: block !important;"><td style="width:20% !important;">'+value['hora']+'</td><td style="width:10% !important;">  </td><td style="width:50% !important;">    '+value['strGrado']+'</td><td style="width:20% !important;"><button  onclick="desactivar('+value['id']+','+sIdentificador+','+ij+')" class="btn-burbit"><span class="icon-undo"></span></button></td></tr>';

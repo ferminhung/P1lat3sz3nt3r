@@ -57,6 +57,7 @@ $(document).on("pageshow","#panel",function(event, ui){
                       html: ""
                     });
 				},success:function(respuesta){  
+                    alert(respuesta);
                     $.mobile.loading( "hide" );
 					$("#espacioStalk").html(" ");
 					var icono="icon-checkmark";
@@ -65,7 +66,7 @@ $(document).on("pageshow","#panel",function(event, ui){
 						 $('#espacioStalk').html('<br>');
 						var aStalk = JSON.parse(respuesta);
 						var aListaStalk=JSON.parse(aStalk[0].listaStalker);
-						var aListaClases=JSON.parse(aStalk[0].clases)
+						var aListaClases=JSON.parse(aStalk[0].totales)
 						var clase="-";
 						var claseID="0";
 						$.each( aListaStalk, function( i, value ) { 
