@@ -42,17 +42,6 @@ margin-left:10px;*/
 	border-left: 1px solid #666;
 }
 
-.btn-rojo {
-	background-color: #426cb4 !important;
-	width: 80% !important;
-	border-style: line !important;
-	font-family: Sans-Serif !important;
-	padding: 5px 8px ! important;
-	font-size: 0.8em !important
-	line-height: 1.1em !important;
-}
-
-.btn-rojo:hover, .btn-rojo:visited{ background-color: #b7950b  !important; color: white !important; }
 
 
 /*btn slider y barra*/
@@ -573,13 +562,13 @@ legend{
   text-decoration: none;
 }
 
-.btn-burbit-yellow {
-	background: #bfd3e0;
-	background-image: -webkit-linear-gradient(top,  #FFC300 , black);
-	background-image: -moz-linear-gradient(top,  #FFC300 , black);
-	background-image: -ms-linear-gradient(top,  #FFC300 , black);
-	background-image: -o-linear-gradient(top,  #FFC300 , black);
-	background-image: linear-gradient(to bottom, #FFC300, black);
+.btn-burbit-red {
+	background: #d14610;
+	background-image: -webkit-linear-gradient(top,  #d14610 , black);
+	background-image: -moz-linear-gradient(top,  #d14610 , black);
+	background-image: -ms-linear-gradient(top,  #d14610 , black);
+	background-image: -o-linear-gradient(top,  #d14610 , black);
+	background-image: linear-gradient(to bottom, #d14610, black);
 	-webkit-border-radius: 15 !important;
 	-moz-border-radius: 15 !important;
 	border-radius: 15px !important;
@@ -598,7 +587,7 @@ legend{
 	line-height: 1.1em !important;
 }
 
-.btn-burbit-yellow:hover {
+.btn-burbit-red:hover {
   background: #3cb0fd;
   background-image: -webkit-linear-gradient(top, #FFC300, #e93613);
   background-image: -moz-linear-gradient(top, #FFC300, #e93613);

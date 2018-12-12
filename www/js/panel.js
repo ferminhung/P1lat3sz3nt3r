@@ -121,6 +121,9 @@ $(document).on("pageshow","#panel",function(event, ui){
     $("#liReservas").click(function(){
         $.mobile.changePage("reserva.html",{ transition : "fade" });
     });
+    $("#liHotPilates").click(function(){
+        $.mobile.changePage("resespecial.html",{ transition : "fade" });
+    });
     $("#liPerfil").click(function(){
         $.mobile.changePage("miperfil.html",{ transition : "fade" });
     });
