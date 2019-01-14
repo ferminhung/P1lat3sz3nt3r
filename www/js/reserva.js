@@ -59,11 +59,27 @@ $(document).on("pageshow","#reserva",function(event, ui){
                     var aTletas=JSON.parse(aStalk[0].listaReservas);
                     var totales=JSON.parse(aStalk[0].totales);  
                     var finalizadas=JSON.parse(aStalk[0].finalizadas);
-                    $('#clasesTot').text("Cantidad de Clases del Plan: "+totales);
-                    $('#clasesFin').text("Cantidad de Clases finalizadas: "+finalizadas);
+                    var programadas=JSON.parse(aStalk[0].programadas);
+
+                    var porreservar=0;
+                    porreservar=parseInt(JSON.parse(aStalk[0].porreservar));
+                    var plan=aStalk[0].plan;
+                    $('#plan').text("Plan: "+plan);
+                    $('#clasesTot').text("Cantidad Total de Clases: "+totales);
+                    $('#clasesFin').text("Cantidad de Clases vistas: "+finalizadas);
+                    $('#clasesPro').text("Cantidad de Clases programadas: "+programadas);
+                    if (porreservar>0){
+                         $('#clasesRec').text("");
+                        $('#butonrecuperar').html('<button  id="recuperar" class="btn-burbit"><span class="icon-checkmark"></span></span> Clases por Recuperar: '+porreservar+'</button>');
+                    }else{
+                        $('#clasesRec').text("No hay Clases por Recuperar");
+                    }
                     var ij=0;
+                    var fecha = new Date();
                     $.each( aTletas, function( i, value ) {
-                        html += '<tr id="fila'+ij+'"style="display: block !important;"><td style="width:20% !important;">'+value['hora']+'</td><td style="width:10% !important;">  </td><td style="width:50% !important;">    '+value['strGrado']+'</td><td style="width:20% !important;"><button  onclick="desactivar('+value['id']+','+sIdentificador+','+ij+')" class="btn-burbit"><span class="icon-undo"></span></button></td></tr>';
+                        fecha=value['hora'];
+                        fecha=fecha.split("-");
+                        html += '<tr id="fila'+ij+'"style="display: block !important;"><td style="width:20% !important;">'+fecha[2]+' / '+fecha[1]+'</td><td style="width:10% !important;">  </td><td style="width:50% !important;">    '+value['strGrado']+'</td><td style="width:20% !important;"><button  onclick="desactivar('+value['id']+','+sIdentificador+','+ij+')" class="btn-burbit"><span class="icon-undo"></span></button></td></tr>';
                         ij+=1;
                     });
                     html += '';
@@ -82,6 +98,11 @@ $(document).on("pageshow","#reserva",function(event, ui){
 
     $("#volverInicio").click(function(){
         $.mobile.changePage("panel.html",{ transition : "fade" });
+
+    });
+
+    $("#butonrecuperar").click(function(){
+        $.mobile.changePage("reselect.html",{ transition : "fade" });
 
     });
 

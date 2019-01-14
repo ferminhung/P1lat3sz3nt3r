@@ -2,9 +2,9 @@ $(document).on("pageshow","#panel",function(event, ui){
     //var aSesion = check_session();
     var sIdentificador=localStorage.getItem("codigoweb");   //aSesion["CodigoWeb"];
     localStorage.setItem("imagenPago", "");
-
     //var sNombre=aSesion["nombre"];
-    $("#hdCabeceraUser").html("<span class='icon-user'></span> "+sIdentificador);
+
+    $("#hdHeadPanel").html("<span class='icon-user'></span> "+sIdentificador);
     $.ajax({
         data:{
             sCodigoWebPhp:sIdentificador,Mandato:'NombreUsuario'
@@ -15,7 +15,7 @@ $(document).on("pageshow","#panel",function(event, ui){
             $('.cargando').fadeIn();
         },success:function(respuesta){  
             var sFitness = respuesta;
-            $("#hdHeadPanel").text(sFitness);
+            $("#hdHeadPanel").text("Hola! "+sFitness);
         },error:function(jqXHR, textStatus, errorThrown){
             ajax_error(jqXHR, textStatus, errorThrown,true);
         }
@@ -112,11 +112,8 @@ $(document).on("pageshow","#panel",function(event, ui){
     $('#liCuenta').click(function(){
         $.mobile.changePage("atletaficha.html",{ transition : "fade" });
     });
-    $('#irDiccionario').click(function(){
-        $.mobile.changePage("diccionario.html",{ transition : "fade" });
-    });
-    $("#liWOD").click(function(){
-        $.mobile.changePage("wod.html",{ transition : "fade" });
+    $("#liWork").click(function(){
+        $.mobile.changePage("reference.html",{ transition : "fade" });
     });
     $("#liReservas").click(function(){
         $.mobile.changePage("reserva.html",{ transition : "fade" });
@@ -130,15 +127,11 @@ $(document).on("pageshow","#panel",function(event, ui){
     $("#liPagos").click(function(){
         $.mobile.changePage("pagos.html",{ transition : "fade" });
     });
-    $("#liRanking").click(function(){
-        $.mobile.changePage("ranking.html",{ transition : "fade" });
+    $("#liBlack").click(function(){
+        $.mobile.changePage("wod.html",{ transition : "fade" });
     });
-    $("#liMarcas").click(function(){
-        $.mobile.changePage("benchmark.html",{ transition : "fade" });
-    });
-    
-    $("#liRMs").click(function(){
-        $.mobile.changePage("ficharm.html",{ transition : "fade" });
+    $("#liReglas").click(function(){
+        $.mobile.changePage("rules.html",{ transition : "fade" });
     });
     $("#liCerrar").click(function(){
         $.mobile.changePage("inicio.html",{ transition : "fade" });
