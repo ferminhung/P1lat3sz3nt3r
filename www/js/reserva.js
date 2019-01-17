@@ -65,7 +65,7 @@ $(document).on("pageshow","#reserva",function(event, ui){
                     porreservar=parseInt(JSON.parse(aStalk[0].porreservar));
                     var plan=aStalk[0].plan;
                     $('#plan').text("Plan: "+plan);
-                    $('#clasesTot').text("Cantidad Total de Clases: "+totales);
+                    $('#clasesTot').text("Cantidad Total de Clases: "+parseInt(totales+porreservar));
                     $('#clasesFin').text("Cantidad de Clases vistas: "+finalizadas);
                     $('#clasesPro').text("Cantidad de Clases programadas: "+programadas);
                     if (porreservar>0){

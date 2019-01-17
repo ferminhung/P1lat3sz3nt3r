@@ -16,6 +16,7 @@ $(document).on("pageshow","#panel",function(event, ui){
         },success:function(respuesta){  
             var sFitness = respuesta;
             $("#hdHeadPanel").text("Hola! "+sFitness);
+            $("#hdCabeceraUser").text(sFitness);
         },error:function(jqXHR, textStatus, errorThrown){
             ajax_error(jqXHR, textStatus, errorThrown,true);
         }

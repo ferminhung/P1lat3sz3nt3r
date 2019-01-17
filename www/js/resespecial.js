@@ -15,60 +15,51 @@ $(document).on("pageshow","#resespecial",function(event, ui){
         url:globalURL,
         method:'POST',
         beforeSend:function(){
-             $.mobile.loading( "show", {
-                  text: "cargando",
-                  textVisible: true,
-                  theme: "a",
-                  html: ""
-                });
+            $.mobile.loading( "show", {
+              text: "cargando",
+              textVisible: true,
+              theme: "a",
+              html: ""
+            });
         },success:function(respuesta){  
             $.mobile.loading( "hide" );
-            var sReserva="SIN";
+            if(respuesta!="SIN REGISTROS"){
+                var aAreas = JSON.parse(respuesta);
+                $.each( aAreas, function( i, value ) { 
+                    $("#listaClases").append('<option value="'+value['id']+'" ">HOT #'+value['id']+'</option>');
+                })
+            }
+        },error:function(jqXHR, textStatus, errorThrown){
+            ajax_error(jqXHR, textStatus, errorThrown,true);
+        }
+    });
+
+    $.ajax({
+        data:{
+            sCodigoWebPhp:sIdentificador, Mandato:'ListaEspecial'
+        },
+        url:globalURL,
+        method:'POST',
+        beforeSend:function(){
+            $.mobile.loading( "show", {
+              text: "cargando",
+              textVisible: true,
+              theme: "a",
+              html: ""
+            });
+        },success:function(respuesta){  
+            $.mobile.loading( "hide" );
             if(respuesta!="SIN"){
                 var aReserva = JSON.parse(respuesta);
                 var sReserva="SIN";
                 var sClase="0";
                 var idReserva="0";
+                $("#listaHoras").html('<option value="SIN">Selecciona el dia</option>');
                 $.each( aReserva, function( i, value ) { 
-                    sReserva=value['strGrado'];
-                    sClase=value['grado'];
-                    idReserva=value['id'];
+                    $("#listaHoras").append('<option value="'+(value['id'])+'">'+value['strGrado']+' </option>');
                 })
-            }
-            if(sReserva=="SIN"){
-                $.ajax({
-                    data:{
-                        sCodigoWebPhp:sIdentificador, Mandato:'ListaEspecial'
-                    },
-                    url:globalURL,
-                    method:'POST',
-                    beforeSend:function(){
-                         $.mobile.loading( "show", {
-                          text: "cargando",
-                          textVisible: true,
-                          theme: "a",
-                          html: ""
-                        });
-                    },success:function(respuesta){  
-                        $.mobile.loading( "hide" );
-                        $("#listaClases option").remove();
-                        $("#listaClases").append('<option value="SIN"> -------- </option>');
-                        if(respuesta!="SIN REGISTROS"){
-                            var aAreas = JSON.parse(respuesta);
-                            $.each( aAreas, function( i, value ) { 
-                                $("#listaClases").append('<option value="'+value['id']+'" ">'+value['strGrado']+'</option>');
-                            })
-                        }
-                    },error:function(jqXHR, textStatus, errorThrown){
-                        ajax_error(jqXHR, textStatus, errorThrown,true);
-                    }
-                });
             }else{
-                alert("Ya Tienes una reserva para: "+sReserva);
-                $("#listaClases option").remove();
-                $("#listaClases").append('<option value="'+sClase+'">'+sReserva+'</option>');
-                $("#btReservar").text("Quitar Reserva");
-                localStorage.setItem("idReserva",idReserva);
+                $("#listaHoras").html('<option value="SIN">Sin Horarios Dsponibles</option>');
             }
         },error:function(jqXHR, textStatus, errorThrown){
             ajax_error(jqXHR, textStatus, errorThrown,true);
@@ -77,69 +68,31 @@ $(document).on("pageshow","#resespecial",function(event, ui){
 
     $("#volverInicio").click(function(){
         $.mobile.changePage("panel.html",{ transition : "fade" });
-
     });
 
     $("#btReservar").click(function(){
-		
-        var sEvento=document.formReservas.listaClases.value;
-        if($("#btReservar").text()!="Quitar Reserva"){
-            if(sEvento!='SIN'){
-                var pulsarreserva=localStorage.getItem("pulsoreserva"); 
-                if (pulsarreserva=='-'){
-                    localStorage.setItem("pulsoreserva","enviando");
-                    $.ajax({
-                        data:{
-                            sCodigoWebPhp:sIdentificador, sIDEventoPhp:sEvento, Mandato:'Reservar'
-                        },
-                        url:globalURL,
-                        method:'POST',
-                        beforeSend:function(){
-                             $.mobile.loading( "show", {
-                              text: "cargando",
-                              textVisible: true,
-                              theme: "a",
-                              html: ""
-                            });
-                        },success:function(respuesta){  
-                            $.mobile.loading( "hide" );
-                            if(respuesta!="FULL"){
-                                localStorage.setItem("pulsoreserva","enviada");
-                                alert(respuesta);
-                                $.mobile.changePage("panel.html",{ transition : "fade" });
-                            }
-                        },error:function(jqXHR, textStatus, errorThrown){
-                            ajax_error(jqXHR, textStatus, errorThrown,true);
-                        }
-                    });
-                }
+        var sReserva=document.formReservas.listaClases.value;
+        var sEvento=document.formReservas.listaHoras.value;
+        $.ajax({
+            data:{
+                sCodigoWebPhp:sIdentificador, sReservaPhp:sReserva, sIDEventoPhp:sEvento, Mandato:'ReservaEspecial'
+            },
+            url:globalURL,
+            method:'POST',
+            beforeSend:function(){
+                 $.mobile.loading( "show", {
+                  text: "cargando",
+                  textVisible: true,
+                  theme: "a",
+                  html: ""
+                });
+            },success:function(respuesta){  
+                $.mobile.loading( "hide" );
+                alert(respuesta);
+            },error:function(jqXHR, textStatus, errorThrown){
+                ajax_error(jqXHR, textStatus, errorThrown,true);
             }
-        }else{
-            var sIdReserva=localStorage.getItem("idReserva");
-			//$("#btReservar").disabled();			
-            $.ajax({
-                data:{
-                    sCodigoWebPhp:sIdentificador, sIdPhp:sIdReserva, Mandato:'QuitarReserva'
-                },
-                url:globalURL,
-                method:'POST',
-                beforeSend:function(){
-                     $.mobile.loading( "show", {
-                      text: "cargando",
-                      textVisible: true,
-                      theme: "a",
-                      html: ""
-                    });
-                },success:function(respuesta){  
-                    $.mobile.loading( "hide" );
-                    alert(respuesta);
-                    $.mobile.changePage("panel.html",{ transition : "fade" });
-                },error:function(jqXHR, textStatus, errorThrown){
-                    ajax_error(jqXHR, textStatus, errorThrown,true);
-                }
-            });
-        }
-		
+        });
     });
 
     $("#listaClases").change(function(){

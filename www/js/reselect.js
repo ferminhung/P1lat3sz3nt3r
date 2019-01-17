@@ -71,6 +71,11 @@ $(document).on("pageshow","#reselect",function(event, ui){
         $.mobile.changePage("reserva.html",{ transition : "fade" });
 
     });
+    $("#irBlackBoard").click(function(){
+        $.mobile.changePage("wod.html",{ transition : "fade" });
+
+    });
+    
 
     $("#btRecuperar").click(function(){
 		
