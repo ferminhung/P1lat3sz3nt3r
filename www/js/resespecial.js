@@ -56,7 +56,7 @@ $(document).on("pageshow","#resespecial",function(event, ui){
                 var idReserva="0";
                 $("#listaHoras").html('<option value="SIN">Selecciona el dia</option>');
                 $.each( aReserva, function( i, value ) { 
-                    $("#listaHoras").append('<option value="'+(value['id'])+'">'+value['strGrado']+' </option>');
+                    $("#listaHoras").append('<option value="'+(value['hora'])+'">'+value['strGrado']+' ('+value['hora']+') </option>');
                 })
             }else{
                 $("#listaHoras").html('<option value="SIN">Sin Horarios Dsponibles</option>');
@@ -95,11 +95,11 @@ $(document).on("pageshow","#resespecial",function(event, ui){
         });
     });
 
-    $("#listaClases").change(function(){
-        var sEvento=document.formReservas.listaClases.value;
+    $("#listaHoras").change(function(){
+        var sEvento=document.formReservas.listaHoras.value;
         $.ajax({
             data:{
-                sCodigoWebPhp:sIdentificador, sIDEventoPhp:sEvento, Mandato:'TotalCupos'
+                sCodigoWebPhp:sIdentificador, sIDEventoPhp:sEvento, Mandato:'CupoEspecial'
             },
             url:globalURL,
             method:'POST',
@@ -112,7 +112,7 @@ $(document).on("pageshow","#resespecial",function(event, ui){
                 });
             },success:function(respuesta){  
                 $.mobile.loading( "hide" );
-                $("#labCupos").text(respuesta);
+                $("#cupos").text(respuesta);
             },error:function(jqXHR, textStatus, errorThrown){
                 ajax_error(jqXHR, textStatus, errorThrown,true);
             }

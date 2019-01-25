@@ -39,20 +39,7 @@ $(document).on("pageshow","#atletaficha",function(event, ui){
                         $("#slcSexo option[value='M']").attr("selected",true);
                         break;
                 }
-                switch(value['vcNivel']){
-                    case '0':
-                        $("#slcNivel option[value='0']").attr("selected",true);
-                        break;
-                    case 'B':
-                        $("#slcNivel option[value='B']").attr("selected",true);
-                        break;
-                    case 'S':
-                        $("#slcNivel option[value='S']").attr("selected",true);
-                        break;
-                    case 'R':
-                        $("#slcNivel option[value='R']").attr("selected",true);
-                        break;
-                }
+                
             })
         },error:function(jqXHR, textStatus, errorThrown){
             ajax_error(jqXHR, textStatus, errorThrown,true);
@@ -65,7 +52,7 @@ $(document).on("pageshow","#atletaficha",function(event, ui){
             var sFechaNac=$("#fechanac").val();
             var sSexo=$("#slcSexo").val();
             var sAltura=$("#altura").val();
-            var sNivel=$("#slcNivel").val();
+            var sNivel="0";
             $("#liGuardarFicha").html("<span class='icon-hour-glass'></span> Esperando Respuesta");
             $("#liGuardarFicha").css("background-color","orange");
             $.ajax({

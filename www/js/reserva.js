@@ -69,7 +69,7 @@ $(document).on("pageshow","#reserva",function(event, ui){
                     $('#clasesFin').text("Cantidad de Clases vistas: "+finalizadas);
                     $('#clasesPro').text("Cantidad de Clases programadas: "+programadas);
                     if (porreservar>0){
-                         $('#clasesRec').text("");
+                        $('#clasesRec').text("");
                         $('#butonrecuperar').html('<button  id="recuperar" class="btn-burbit"><span class="icon-checkmark"></span></span> Clases por Recuperar: '+porreservar+'</button>');
                     }else{
                         $('#clasesRec').text("No hay Clases por Recuperar");
