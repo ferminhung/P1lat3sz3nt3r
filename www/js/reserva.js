@@ -35,6 +35,11 @@ $(document).on("pageshow","#reserva",function(event, ui){
     var dd = hoy.getDate();
     var mm = hoy.getMonth()+1; //hoy es 0!
     var yyyy = hoy.getFullYear();
+    if(mm < 10){
+      fechahoy=dd+'-0'+mm+'-'+yyyy;
+    }else{
+      fechahoy=dd+'-'+mm+'-'+yyyy;
+    }
     $("#labDescripcion").text(" Fecha: "+dd+"/"+mm+"/"+yyyy);
      $.ajax({
         data:{
@@ -76,10 +81,24 @@ $(document).on("pageshow","#reserva",function(event, ui){
                     }
                     var ij=0;
                     var fecha = new Date();
+                    var fechaphp = new Date();
+                    var tiempo=new Date();
+                    var hora=tiempo.getHours();
+                    var horatope=(hora*100)+400;
+                    var finhoratope=0;
                     $.each( aTletas, function( i, value ) {
                         fecha=value['hora'];
                         fecha=fecha.split("-");
-                        html += '<tr id="fila'+ij+'"style="display: block !important;"><td style="width:20% !important;">'+fecha[2]+' / '+fecha[1]+'</td><td style="width:10% !important;">  </td><td style="width:50% !important;">    '+value['strGrado']+'</td><td style="width:20% !important;"><button  onclick="desactivar('+value['id']+','+sIdentificador+','+ij+')" class="btn-burbit"><span class="icon-undo"></span></button></td></tr>';
+                        fechaphp=fecha[2]+'-'+fecha[1]+'-'+fecha[0];
+                        if(fechaphp!=fechahoy){
+                            html += '<tr id="fila'+ij+'"style="display: block !important;"><td style="width:20% !important;">'+fecha[2]+' / '+fecha[1]+'</td><td style="width:10% !important;">  </td><td style="width:50% !important;">    '+value['strGrado']+'</td><td style="width:20% !important;"><button  onclick="desactivar('+value['id']+','+sIdentificador+','+ij+')" class="btn-burbit"><span class="icon-undo"></span></button></td></tr>';
+                        }else{
+                            if (value['Horario']>horatope){
+                                html += '<tr id="fila'+ij+'"style="display: block !important;"><td style="width:20% !important;">'+fecha[2]+' / '+fecha[1]+'</td><td style="width:10% !important;">  </td><td style="width:50% !important;">    '+value['strGrado']+'</td><td style="width:20% !important;"><button  onclick="desactivar('+value['id']+','+sIdentificador+','+ij+')" class="btn-burbit"><span class="icon-undo"></span></button></td></tr>';
+                            }else{
+                                finhoratope++;
+                            }
+                        }
                         ij+=1;
                     });
                     html += '';
@@ -90,6 +109,10 @@ $(document).on("pageshow","#reserva",function(event, ui){
                 $('#afiliados').html(html);
                 $('#afiliados').trigger('create');
                 $("#labDescripcion").text(ij+" Activos");
+                if(finhoratope>0){
+                    $('#clasesFin').text("Cantidad de Clases vistas: "+(parseInt(finalizadas)+parseInt(finhoratope)));
+                    $('#clasesPro').text("Cantidad de Clases programadas: "+(parseInt(programadas)-parseInt(finhoratope)));
+                }
             }
         },error:function(jqXHR, textStatus, errorThrown){
             ajax_error(jqXHR, textStatus, errorThrown,true);

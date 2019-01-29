@@ -113,6 +113,9 @@ $(document).on("pageshow","#reselect",function(event, ui){
 
     $("#listaClases").change(function(){
         var sEvento=document.formReservas.listaClases.value;
+        var tiempo=new Date();
+        var hora=tiempo.getHours();
+        var x = document.getElementById("listaClases").selectedIndex;
         $.ajax({
             data:{
                 sCodigoWebPhp:sIdentificador, sIDEventoPhp:sEvento, Mandato:'TotalCupos'
@@ -134,9 +137,22 @@ $(document).on("pageshow","#reselect",function(event, ui){
                     var sClase="0";
                     var idReserva="0";
                     $("#listaHoras").html('<option value="SIN">Selecciona la Hora</option>');
-                    $.each( aReserva, function( i, value ) { 
-                        $("#listaHoras").append('<option value="'+(value['id'])+'">'+value['strGrado']+' '+parseInt(5-parseInt(value['Total']))+' cupos </option>');
-                    })
+                    if(x==1){
+                        var horatope=(hora*100);
+                        $.each( aReserva, function( i, value ) { 
+                            if (value['Horario']>horatope){
+                                if (parseInt(5-parseInt(value['Total']))>0) {
+                                    $("#listaHoras").append('<option value="'+(value['id'])+'">'+value['strGrado']+' '+parseInt(5-parseInt(value['Total']))+' cupos </option>');
+                                }
+                            }
+                        })
+                    }else{
+                        $.each( aReserva, function( i, value ) { 
+                            if (parseInt(5-parseInt(value['Total']))>0) {
+                                $("#listaHoras").append('<option value="'+(value['id'])+'">'+value['strGrado']+' '+parseInt(5-parseInt(value['Total']))+' cupos </option>');
+                            }
+                        })
+                    }
                 }else{
                     $("#listaHoras").html('<option value="SIN">Sin Horarios Dsponibles</option>');
                 }

@@ -23,7 +23,7 @@ $(document).on("pageshow","#resespecial",function(event, ui){
             });
         },success:function(respuesta){  
             $.mobile.loading( "hide" );
-            if(respuesta!="SIN REGISTROS"){
+            if(respuesta!="SIN"){
                 var aAreas = JSON.parse(respuesta);
                 $.each( aAreas, function( i, value ) { 
                     $("#listaClases").append('<option value="'+value['id']+'" ">HOT #'+value['id']+'</option>');
@@ -73,26 +73,31 @@ $(document).on("pageshow","#resespecial",function(event, ui){
     $("#btReservar").click(function(){
         var sReserva=document.formReservas.listaClases.value;
         var sEvento=document.formReservas.listaHoras.value;
-        $.ajax({
-            data:{
-                sCodigoWebPhp:sIdentificador, sReservaPhp:sReserva, sIDEventoPhp:sEvento, Mandato:'ReservaEspecial'
-            },
-            url:globalURL,
-            method:'POST',
-            beforeSend:function(){
-                 $.mobile.loading( "show", {
-                  text: "cargando",
-                  textVisible: true,
-                  theme: "a",
-                  html: ""
-                });
-            },success:function(respuesta){  
-                $.mobile.loading( "hide" );
-                alert(respuesta);
-            },error:function(jqXHR, textStatus, errorThrown){
-                ajax_error(jqXHR, textStatus, errorThrown,true);
-            }
-        });
+        if(sReserva!="SIN" && sEvento!="SIN"){
+            $.ajax({
+                data:{
+                    sCodigoWebPhp:sIdentificador, sReservaPhp:sReserva, sIDEventoPhp:sEvento, Mandato:'ReservaEspecial'
+                },
+                url:globalURL,
+                method:'POST',
+                beforeSend:function(){
+                     $.mobile.loading( "show", {
+                      text: "cargando",
+                      textVisible: true,
+                      theme: "a",
+                      html: ""
+                    });
+                },success:function(respuesta){  
+                    $.mobile.loading( "hide" );
+                    alert(respuesta);
+                    $.mobile.changePage("panel.html",{ transition : "fade" });
+                },error:function(jqXHR, textStatus, errorThrown){
+                    ajax_error(jqXHR, textStatus, errorThrown,true);
+                }
+            });
+        }else{
+            alert("No es posible hacer la reserva");
+        }
     });
 
     $("#listaHoras").change(function(){
