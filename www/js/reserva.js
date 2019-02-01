@@ -35,6 +35,9 @@ $(document).on("pageshow","#reserva",function(event, ui){
     var dd = hoy.getDate();
     var mm = hoy.getMonth()+1; //hoy es 0!
     var yyyy = hoy.getFullYear();
+    if(dd < 10){
+        dd='0'+dd;
+    }
     if(mm < 10){
       fechahoy=dd+'-0'+mm+'-'+yyyy;
     }else{
@@ -65,7 +68,6 @@ $(document).on("pageshow","#reserva",function(event, ui){
                     var totales=JSON.parse(aStalk[0].totales);  
                     var finalizadas=JSON.parse(aStalk[0].finalizadas);
                     var programadas=JSON.parse(aStalk[0].programadas);
-
                     var porreservar=0;
                     porreservar=parseInt(JSON.parse(aStalk[0].porreservar));
                     var plan=aStalk[0].plan;
