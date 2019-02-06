@@ -61,7 +61,7 @@ $(document).on("pageshow","#resespecial",function(event, ui){
                 var idReserva="0";
                 $("#listaHoras").html('<option value="SIN">Selecciona el dia</option>');
                 $.each( aReserva, function( i, value ) { 
-                    $("#listaHoras").append('<option value="'+(value['hora'])+'">'+value['strGrado']+' ('+value['hora']+') </option>');
+                    $("#listaHoras").append('<option value="'+(value['hora'])+'">'+value['strGrado']+' ('+value['Dia']+') </option>');
                 })
             }else{
                 $("#listaHoras").html('<option value="SIN">Sin Horarios Dsponibles</option>');
